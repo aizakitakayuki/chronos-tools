@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import jp.co.chronos.tools.generator.task.EnumGeneratorTask;
-import jp.co.chronos.tools.generator.task.EnumTestGeneratorTask;
 import jp.co.chronos.tools.generator.task.GeneratorTask;
 
 import com.google.common.collect.Lists;
@@ -29,16 +28,16 @@ public class EnumGenerator implements Generator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("終わり!");
+		System.out.println("Finish!");
 	}
 
 	@Override
 	public void generate() throws IOException {
 		List<GeneratorTask> generatorList = Lists.newArrayList();
 		GeneratorTask enumGeneratorTask = new EnumGeneratorTask();
-		GeneratorTask enumTestGeneratorTask = new EnumTestGeneratorTask();
+		// GeneratorTask enumTestGeneratorTask = new EnumTestGeneratorTask();
 		generatorList.add(enumGeneratorTask);
-		generatorList.add(enumTestGeneratorTask);
+		// generatorList.add(enumTestGeneratorTask);
 
 		try {
 			for (GeneratorTask task : generatorList) {

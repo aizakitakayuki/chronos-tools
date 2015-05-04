@@ -1,7 +1,7 @@
 /**
  *
  */
-package jp.co.chronos.tools.generator.task;
+package jp.co.chronos.tools.param;
 
 /**
  * @author aizaki

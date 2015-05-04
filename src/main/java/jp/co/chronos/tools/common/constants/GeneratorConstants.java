@@ -51,18 +51,11 @@ public class GeneratorConstants {
 	/** 空文字. */
 	public static final String BLANK = "";
 
-	// ----------- DDLGenerator ----------- //
-	/** テーブル定義書ファイルパス. */
-	public static final String TABLE_DEFINITION_FILE_PATH = "/excel/テーブル定義書.xlsx";
-
-	/** シート名"テーブル一覧". */
-	public static final String SHEE_NAME_TABLE_LIST = "テーブル一覧";
-
 	// ----------- EnumGenerator ----------- //
-	/** Enum一覧ファイルパス. */
-	public static final String ENUM_LIST_FILE_PATH = "/excel/Enum一覧.xlsx";
+	public static final String ENUM_DEFINITION_FILE_PATH = "/excel/EnumDefinition.xlsx";
 
-	/** シート名"Enum一覧". */
-	public static final String SHEET_NAME_ENUM_LIST = "Enum一覧";
+	public static final String SHEET_NAME_ENUM_DEFINITION = "Enum Definition";
+
+	public static final String SHEET_NAME_GENERAL = "General";
 
 }

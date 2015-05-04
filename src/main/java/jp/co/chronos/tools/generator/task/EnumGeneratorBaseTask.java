@@ -11,11 +11,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import jp.co.chronos.tools.common.constants.GeneratorConstants;
-import jp.co.chronos.tools.common.util.ExcelFileReader;
+import jp.co.chronos.tools.common.util.ExcelReader;
 import jp.co.chronos.tools.common.util.FreeMarker;
-import jp.co.chronos.tools.common.util.ToolUtils;
-import jp.co.chronos.tools.entity.EnumEntity;
-import jp.co.chronos.tools.entity.ExcelDataEntity;
+import jp.co.chronos.tools.entity.enumdefinition.EnumDefinitionEntity;
+import jp.co.chronos.tools.entity.enumdefinition.GeneralEntity;
+import jp.co.chronos.tools.param.Param;
+import jp.co.chronos.tools.param.enumdefinition.EnumParam;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,23 +59,23 @@ public abstract class EnumGeneratorBaseTask implements GeneratorTask {
 		// key:クラス名.
 		Map<String, Object> sourceMap = Maps.newHashMap();
 
-		// Enum一覧読み込み.
-		List<ExcelDataEntity> entityList = ExcelFileReader.create(GeneratorConstants.ENUM_LIST_FILE_PATH).sheetName(GeneratorConstants.SHEET_NAME_ENUM_LIST).readAllEntity();
+		ExcelReader excelReader = ExcelReader.create(GeneratorConstants.ENUM_DEFINITION_FILE_PATH);
+		List<EnumDefinitionEntity> enumEntityList = excelReader.read(GeneratorConstants.SHEET_NAME_ENUM_DEFINITION).convert(EnumDefinitionEntity.class);
+		List<GeneralEntity> generalEntityList = excelReader.read(GeneratorConstants.SHEET_NAME_GENERAL).convert(GeneralEntity.class);
 
 		// Template向けEnum情報生成.
-		String className = null;
+		String physicalEnumName = null;
 		Map<String, Object> source = null;
 		List<Param> paramList = null;
-		for (ExcelDataEntity entity : entityList) {
-			String tmpClassName = getClassName(entity.getValue(EnumEntity.TYPE_PHYSICAL_NAME));
-			if (StringUtils.equals(className, tmpClassName)) {
+		for (EnumDefinitionEntity entity : enumEntityList) {
+			String tmpClassName = entity.getPhysicalEnumName();
+			if (StringUtils.equals(physicalEnumName, tmpClassName)) {
 				// 同じEnum.
-				Param param = new EnumParam(//
-						entity.getValue(EnumEntity.FIELD_LOGICAL_NAME),//
-						entity.getValue(EnumEntity.FIELD_PHYSICAL_NAME),//
-						entity.getValue(EnumEntity.CODE),//
-						entity.getValue(EnumEntity.VALUE)//
-				);
+				Param param = EnumParam.getInstance()//
+						.setLogicalFieldName(entity.getLogicalFieldName())//
+						.setPhysicalFieldName(entity.getPhysicalFieldName())//
+						.setCode(entity.getCode())//
+						.setValue(entity.getValue());
 				if (paramList != null) {
 					paramList.add(param);
 				}
@@ -83,84 +84,25 @@ public abstract class EnumGeneratorBaseTask implements GeneratorTask {
 			// 異なるEnum.
 			source = Maps.newHashMap();
 			paramList = Lists.newArrayList();
-			className = getClassName(entity.getValue(EnumEntity.TYPE_PHYSICAL_NAME));
-			String className_ja = entity.getValue(EnumEntity.TYPE_LOGICAL_NAME);
-			Param param = new EnumParam(//
-					entity.getValue(EnumEntity.FIELD_LOGICAL_NAME),//
-					entity.getValue(EnumEntity.FIELD_PHYSICAL_NAME),//
-					entity.getValue(EnumEntity.CODE),//
-					entity.getValue(EnumEntity.VALUE)//
-			);
+			physicalEnumName = entity.getPhysicalEnumName();
+			String logicalEnumName = entity.getLogicalEnumName();
+			Param param = EnumParam.getInstance()//
+					.setLogicalFieldName(entity.getLogicalFieldName())//
+					.setPhysicalFieldName(entity.getPhysicalFieldName())//
+					.setCode(entity.getCode())//
+					.setValue(entity.getValue());
 			paramList.add(param);
-			source.put("packageName", getPackage());
-			GeneratorConstants.setDefaultSourceData(source);
-			source.put("className", className);
-			source.put("className_ja", className_ja);
+			source.put("packageName", generalEntityList.get(0).getPackageName());
+			source.put("author", generalEntityList.get(0).getAuthor());
+			source.put("physicalEnumName", physicalEnumName);
+			source.put("logicalEnumName", logicalEnumName);
+			source.put("dataTypeOfCode", entity.getDataTypeOfCode());
+			source.put("dataTypeOfValue", entity.getDataTypeOfValue());
 			source.put("paramList", paramList);
-			sourceMap.put(className, source);
+			sourceMap.put(physicalEnumName, source);
 		}
 
 		return sourceMap;
 	}
 
-	private String getClassName(String className) {
-		StringBuilder sb = new StringBuilder(ToolUtils.capitalizeAndRemoveDelimiter(className, '_'));
-		sb.append("Type");
-		return sb.toString();
-	}
-
-	public static class EnumParam implements Param {
-
-		private String field_ja;
-
-		private String field_en;
-
-		private String code;
-
-		private String value;
-
-		public EnumParam(String field_ja, String field_en, String code, String value) {
-			this.field_ja = field_ja;
-			this.field_en = field_en;
-			this.code = code;
-			this.value = value;
-		}
-
-		/**
-		 * field_jaを返却する.
-		 *
-		 * @return field_ja
-		 */
-		public String getField_ja() {
-			return field_ja;
-		}
-
-		/**
-		 * field_enを返却する.
-		 *
-		 * @return field_en
-		 */
-		public String getField_en() {
-			return field_en;
-		}
-
-		/**
-		 * codeを返却する.
-		 *
-		 * @return code
-		 */
-		public String getCode() {
-			return code;
-		}
-
-		/**
-		 * valueを返却する.
-		 *
-		 * @return value
-		 */
-		public String getValue() {
-			return value;
-		}
-
-	}
 }
