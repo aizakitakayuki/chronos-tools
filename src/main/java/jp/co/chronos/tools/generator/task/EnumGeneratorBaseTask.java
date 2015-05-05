@@ -38,10 +38,6 @@ public abstract class EnumGeneratorBaseTask implements GeneratorTask {
 
 	public abstract String getTargetFolder();
 
-	public abstract String getPackage();
-
-	public abstract String getOutputExtention();
-
 	@Override
 	public void process() throws Exception {
 		Map<String, Object> sourceMap = createSourceMap();
@@ -49,7 +45,7 @@ public abstract class EnumGeneratorBaseTask implements GeneratorTask {
 			StringBuilder sb = new StringBuilder(getOutputFolder());
 			sb.append("/");
 			sb.append(getFileName(data.getKey()));
-			sb.append(getOutputExtention());
+			sb.append(GeneratorConstants.ENUM_OUTPUT_EXTENSION);
 			Writer out = new OutputStreamWriter(new FileOutputStream(sb.toString()));
 			FreeMarker fm = new FreeMarker(out);
 			fm.make(data.getValue(), getTemplate());
