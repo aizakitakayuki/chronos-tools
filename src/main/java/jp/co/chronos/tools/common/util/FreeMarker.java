@@ -14,7 +14,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 /**
- * FreeMarkerを用いたファイル出力ユーティリティ.
+ * Utility for File I/O used FreeMarker.
  *
  * @author aizaki
  *

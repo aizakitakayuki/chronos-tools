@@ -4,17 +4,13 @@
 package jp.co.chronos.tools.common.constants;
 
 /**
- * RedScorpionGeneratorの定数クラス.
+ * Constant class.
  *
  * @author aizaki
  *
  */
 public class GeneratorConstants {
 
-	/**
-	 * Constructor.<br>
-	 * インスタンス化禁止.
-	 */
 	private GeneratorConstants() {
 	}
 
