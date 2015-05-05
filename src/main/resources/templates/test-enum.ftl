@@ -7,22 +7,25 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 /**
- * ${className}Test.<br>
- * ${className_ja}区分テスト.
+ * ${physicalEnumName}Test.<br>
+ * Testing for ${logicalEnumName}.
  *
  * @author ${author}
  */
-public class ${className}Test {
+public class ${physicalEnumName}Test {
 
 	@Test
 	public void test() {
 	<#list paramList as param>
-		assertThat(${className}.getType("${param.code}"), is(${className}.${param.field_en}));
+		assertThat(${physicalEnumName}.getType(<#if codeDataType = "String">"${param.code}"<#else>${param.code}</#if>), is(${physicalEnumName}.${param.physicalFieldName}));
 	</#list>
-		assertThat(${className}.getType("nullValue"), is(nullValue()));
+	<#if codeDataType = "String">
+		assertThat(${physicalEnumName}.getType("nullValue"), is(nullValue()));
+	<#else>
+		assertThat(${physicalEnumName}.getType(2147483647), is(nullValue()));
+	</#if>
 	<#list paramList as param>
-		assertThat(${className}.${param.field_en}.getValue(), is("${param.code}"));
+		assertThat(${physicalEnumName}.${param.physicalFieldName}.getValue(), is("${param.value}"));
 	</#list>
 	}
 }
-	

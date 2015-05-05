@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 </#if>
 /**
  * ${physicalEnumName}.<br>
- * ${logicalEnumName}区分.
+ * ${logicalEnumName}.
  *
  * @author ${author}
  *
