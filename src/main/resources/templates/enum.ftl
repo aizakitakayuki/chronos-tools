@@ -1,6 +1,6 @@
 package ${packageName};
 
-<#if dataTypeOfCode = "String">
+<#if codeDataType = "String">
 import org.apache.commons.lang3.StringUtils;
 </#if>
 /**
@@ -14,21 +14,21 @@ public enum ${physicalEnumName} {
 
 	<#list paramList as param>
 	/** ${param.logicalFieldName} */
-	${param.physicalFieldName}(<#if dataTypeOfCode = "String">"${param.code}"<#else>${param.code}</#if>, <#if dataTypeOfValue = "String">"${param.value}"<#else>${param.value}</#if>)<#if param_has_next>, //<#else>;</#if>
+	${param.physicalFieldName}(<#if codeDataType = "String">"${param.code}"<#else>${param.code}</#if>, "${param.value}")<#if param_has_next>, //<#else>;</#if>
 	</#list>
 
 	/** Enumが保持する値. */
-	private final <#if dataTypeOfCode = "String">String<#else>int</#if> code;
+	private final <#if codeDataType = "String">String<#else>int</#if> code;
 
 	/** ${logicalEnumName}の値 */
-	private final <#if dataTypeOfValue = "String">String<#else>int</#if> value;
+	private final String value;
 
 	/**
 	 * Constructor.
 	 *
 	 * @param code
 	 */
-	private ${physicalEnumName}(final <#if dataTypeOfCode = "String">String<#else>int</#if> code, final <#if dataTypeOfValue = "String">String<#else>int</#if> value) {
+	private ${physicalEnumName}(final <#if codeDataType = "String">String<#else>int</#if> code, final String value) {
 		this.code = code;
 		this.value = value;
 	}
@@ -40,9 +40,9 @@ public enum ${physicalEnumName} {
 	 *
 	 * @return ${logicalEnumName}区分
 	 */
-	public static ${physicalEnumName} getType(final <#if dataTypeOfCode = "String">String<#else>int</#if> code) {
+	public static ${physicalEnumName} getType(final <#if codeDataType = "String">String<#else>int</#if> code) {
 		for (${physicalEnumName} type : values()) {
-			if (<#if dataTypeOfCode = "String">StringUtils.equals(type.getValue(), code)<#else>type.getValue() == code</#if>) {
+			if (<#if codeDataType = "String">StringUtils.equals(type.getCode(), code)<#else>type.getCode() == code</#if>) {
 				return type;
 			}
 		}
@@ -54,7 +54,7 @@ public enum ${physicalEnumName} {
 	 *
 	 * @return ${logicalEnumName}区分の値
 	 */
-	public <#if dataTypeOfCode = "String">String<#else>int</#if> getCode() {
+	public <#if codeDataType = "String">String<#else>int</#if> getCode() {
 		return this.code;
 	}
 
@@ -63,7 +63,7 @@ public enum ${physicalEnumName} {
 	 *
 	 * @return ${logicalEnumName}の値
 	 */
-	public <#if dataTypeOfValue = "String">String<#else>int</#if> getValue() {
+	public String getValue() {
 		return this.value;
 	}
 

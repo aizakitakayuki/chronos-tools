@@ -6,32 +6,58 @@ package jp.co.chronos.tools.entity.enumdefinition;
 import jp.co.chronos.tools.entity.Entity;
 
 /**
+ * EnumDefinition Entity.
+ *
  * @author aizaki
  *
  */
 public class EnumDefinitionEntity implements Entity {
 
+	/** Enum ID */
 	private String enumId;
 
+	/** Logical Enum Name */
 	private String logicalEnumName;
 
+	/** Physical Enum Name */
 	private String physicalEnumName;
 
-	private String dataTypeOfCode;
+	/** Code Data Type */
+	private String codeDataType;
 
-	private String dataTypeOfValue;
-
+	/** Field ID */
 	private String fieldId;
 
+	/** Logical Field Name */
 	private String logicalFieldName;
 
+	/** Physical Field Name */
 	private String physicalFieldName;
 
+	/** Code */
 	private String code;
 
+	/** Value */
 	private String value;
 
 	/**
+	 * Constructor.
+	 */
+	private EnumDefinitionEntity() {
+	}
+
+	/**
+	 * Static Factory.
+	 *
+	 * @return
+	 */
+	public static EnumDefinitionEntity getInstance() {
+		return new EnumDefinitionEntity();
+	}
+
+	/**
+	 * Getter for Enum ID.
+	 *
 	 * @return enumId
 	 */
 	public String getEnumId() {
@@ -39,6 +65,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Enum ID.
 	 *
 	 * @param enumId
 	 * @return
@@ -49,6 +76,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Getter for Logical Enum Name.
+	 *
 	 * @return logicalEnumName
 	 */
 	public String getLogicalEnumName() {
@@ -56,6 +85,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Logical Enum Name.
 	 *
 	 * @param logicalEnumName
 	 * @return
@@ -66,6 +96,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Getter for Physical Enum Name.
+	 *
 	 * @return physicalEnumName
 	 */
 	public String getPhysicalEnumName() {
@@ -73,6 +105,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 *
+	 * Setter for Physical Enum Name.
 	 *
 	 * @param physicalEnumName
 	 * @return
@@ -83,40 +117,28 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
-	 * @return dataTypeOfCode
+	 * Getter for Code Data Type.
+	 * 
+	 * @return codeDataType
 	 */
-	public String getDataTypeOfCode() {
-		return dataTypeOfCode;
+	public String getCodeDataType() {
+		return codeDataType;
 	}
 
 	/**
+	 * Setter for Code Data Type.
 	 *
-	 * @param dataTypeOfCode
+	 * @param codeDataType
 	 * @return
 	 */
-	public EnumDefinitionEntity setDataTypeOfCode(String dataTypeOfCode) {
-		this.dataTypeOfCode = dataTypeOfCode;
+	public EnumDefinitionEntity setCodeDataType(String codeDataType) {
+		this.codeDataType = codeDataType;
 		return this;
 	}
 
 	/**
-	 * @return dataTypeOfValue
-	 */
-	public String getDataTypeOfValue() {
-		return dataTypeOfValue;
-	}
-
-	/**
+	 * Getter for Field ID.
 	 *
-	 * @param dataTypeOfValue
-	 * @return
-	 */
-	public EnumDefinitionEntity setDataTypeOfValue(String dataTypeOfValue) {
-		this.dataTypeOfValue = dataTypeOfValue;
-		return this;
-	}
-
-	/**
 	 * @return fieldId
 	 */
 	public String getFieldId() {
@@ -124,6 +146,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Field ID.
 	 *
 	 * @param fieldId
 	 * @return
@@ -134,6 +157,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Getter for Logical Field Name.
+	 *
 	 * @return logicalFieldName
 	 */
 	public String getLogicalFieldName() {
@@ -141,6 +166,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Logical Field Name.
 	 *
 	 * @param logicalFieldName
 	 * @return
@@ -151,6 +177,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Getter for Physical Field Name.
+	 *
 	 * @return physicalFieldName
 	 */
 	public String getPhysicalFieldName() {
@@ -158,6 +186,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Physical Field Name.
 	 *
 	 * @param physicalFieldName
 	 * @return
@@ -168,6 +197,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Getter for Code.
+	 *
 	 * @return code
 	 */
 	public String getCode() {
@@ -175,6 +206,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Code.
 	 *
 	 * @param code
 	 * @return
@@ -185,6 +217,8 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Getter for Value.
+	 *
 	 * @return value
 	 */
 	public String getValue() {
@@ -192,6 +226,7 @@ public class EnumDefinitionEntity implements Entity {
 	}
 
 	/**
+	 * Setter for Value.
 	 *
 	 * @param value
 	 * @return

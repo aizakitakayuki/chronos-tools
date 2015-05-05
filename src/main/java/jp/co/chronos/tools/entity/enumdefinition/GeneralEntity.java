@@ -11,13 +11,23 @@ import jp.co.chronos.tools.entity.Entity;
  */
 public class GeneralEntity implements Entity {
 
+	/** Author */
 	private String author;
 
+	/** Package Name */
 	private String packageName;
 
+	/**
+	 * Constructor.
+	 */
 	private GeneralEntity() {
 	}
 
+	/**
+	 * Static Factory.
+	 * 
+	 * @return
+	 */
 	public static GeneralEntity getInstance() {
 		return new GeneralEntity();
 	}

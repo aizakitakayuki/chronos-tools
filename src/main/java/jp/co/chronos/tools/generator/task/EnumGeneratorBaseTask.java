@@ -18,6 +18,7 @@ import jp.co.chronos.tools.entity.enumdefinition.GeneralEntity;
 import jp.co.chronos.tools.param.Param;
 import jp.co.chronos.tools.param.enumdefinition.EnumParam;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
@@ -56,32 +57,31 @@ public abstract class EnumGeneratorBaseTask implements GeneratorTask {
 	}
 
 	public Map<String, Object> createSourceMap() {
-		// key:クラス名.
+		// key : Physical Enum Name.
 		Map<String, Object> sourceMap = Maps.newHashMap();
 
 		ExcelReader excelReader = ExcelReader.create(GeneratorConstants.ENUM_DEFINITION_FILE_PATH);
 		List<EnumDefinitionEntity> enumEntityList = excelReader.read(GeneratorConstants.SHEET_NAME_ENUM_DEFINITION).convert(EnumDefinitionEntity.class);
 		List<GeneralEntity> generalEntityList = excelReader.read(GeneratorConstants.SHEET_NAME_GENERAL).convert(GeneralEntity.class);
 
-		// Template向けEnum情報生成.
 		String physicalEnumName = null;
 		Map<String, Object> source = null;
 		List<Param> paramList = null;
 		for (EnumDefinitionEntity entity : enumEntityList) {
 			String tmpClassName = entity.getPhysicalEnumName();
 			if (StringUtils.equals(physicalEnumName, tmpClassName)) {
-				// 同じEnum.
+				// Same Enum.
 				Param param = EnumParam.getInstance()//
 						.setLogicalFieldName(entity.getLogicalFieldName())//
 						.setPhysicalFieldName(entity.getPhysicalFieldName())//
 						.setCode(entity.getCode())//
 						.setValue(entity.getValue());
-				if (paramList != null) {
+				if (CollectionUtils.isNotEmpty(paramList)) {
 					paramList.add(param);
 				}
 				continue;
 			}
-			// 異なるEnum.
+			// Different Enum.
 			source = Maps.newHashMap();
 			paramList = Lists.newArrayList();
 			physicalEnumName = entity.getPhysicalEnumName();
@@ -96,12 +96,10 @@ public abstract class EnumGeneratorBaseTask implements GeneratorTask {
 			source.put("author", generalEntityList.get(0).getAuthor());
 			source.put("physicalEnumName", physicalEnumName);
 			source.put("logicalEnumName", logicalEnumName);
-			source.put("dataTypeOfCode", entity.getDataTypeOfCode());
-			source.put("dataTypeOfValue", entity.getDataTypeOfValue());
+			source.put("codeDataType", entity.getCodeDataType());
 			source.put("paramList", paramList);
 			sourceMap.put(physicalEnumName, source);
 		}
-
 		return sourceMap;
 	}
 

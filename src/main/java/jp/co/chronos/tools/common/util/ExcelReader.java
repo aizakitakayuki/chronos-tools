@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
@@ -47,7 +48,7 @@ public class ExcelReader {
 
 			List<String> fieldNams = Lists.newArrayList();
 			for (Cell cell : sheet.getRow(0)) {
-				fieldNams.add(cell.getStringCellValue());
+				fieldNams.add(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, cellStringValue(cell)));
 			}
 
 			for (int i = 1; i <= sheet.getLastRowNum(); i++) {
