@@ -46,15 +46,13 @@ public class ExcelReader {
 			Workbook workbook = WorkbookFactory.create(this.getClass().getResourceAsStream(this.filePath));
 			Sheet sheet = workbook.getSheet(sheetName);
 
-			List<String> fieldNams = Lists.newArrayList();
-			for (Cell cell : sheet.getRow(0)) {
-				fieldNams.add(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, cellStringValue(cell)));
-			}
+			List<String> fieldNames = Lists.newArrayList();
+			sheet.getRow(0).forEach(cell -> fieldNames.add(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, cellStringValue(cell))));
 
 			for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 				Map<String, String> map = Maps.newHashMap();
 				for (int j = 0; j < sheet.getRow(i).getLastCellNum(); j++) {
-					map.put(fieldNams.get(j), cellStringValue(sheet.getRow(i).getCell(j)));
+					map.put(fieldNames.get(j), cellStringValue(sheet.getRow(i).getCell(j)));
 				}
 				entities.add(map);
 			}
